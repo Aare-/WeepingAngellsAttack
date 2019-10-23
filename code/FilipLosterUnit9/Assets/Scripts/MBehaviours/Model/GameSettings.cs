@@ -1,7 +1,14 @@
 ﻿
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "Root", menuName = "FL/CreateGameSettings")]
+[CreateAssetMenu(fileName = "Root", menuName = "FL/Create Game Settings")]
 public class GameSettings : ScriptableObject {
-    public bool IsSoundEnabled;
+    [SerializeField]
+    public bool IsSoundEnabled {
+        get => _IsSoundEnabled;
+        set => _IsSoundEnabled = value;
+    }
+
+    protected bool _IsSoundEnabled;
 }

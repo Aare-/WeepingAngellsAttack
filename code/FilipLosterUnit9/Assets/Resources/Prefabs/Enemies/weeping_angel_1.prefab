@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8494379852729671105}
   - component: {fileID: 7410795238069797577}
   - component: {fileID: 1558325278}
-  - component: {fileID: 3709768587316314906}
+  - component: {fileID: 1558325279}
   m_Layer: 0
   m_Name: angel_1
   m_TagString: Untagged
@@ -114,7 +114,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 3709768587316314906}
+        - m_Target: {fileID: 1558325279}
           m_MethodName: OnBeingShoot
           m_Mode: 1
           m_Arguments:
@@ -127,7 +127,7 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.EventSystems.EventTrigger+TriggerEvent, UnityEngine.UI,
         Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
---- !u!114 &3709768587316314906
+--- !u!114 &1558325279
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3908443169320042947}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06fa61fe22e948dba1521efdde48d311, type: 3}
+  m_Script: {fileID: 11500000, guid: 014562b9cdee4ae4b6601173ea2622c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _Settings: {fileID: 11400000, guid: 2e21fa9fa987a5f4eb78401c2f9293bc, type: 2}

@@ -15,4 +15,8 @@ static class ExtensionVector2 {
 
         return new Vector2(cos * tx - sin * ty, sin * tx + cos * ty);
     }
+
+    public static Vector3 ToMapPos(this Vector2 v) {
+        return new Vector3(v.x, 0, v.y);
+    }
 }
