@@ -3,7 +3,27 @@ guid: 381ddc786fd840d4f834ac8b6659d157
 ModelImporter:
   serializedVersion: 25
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 02___Default
+    second: {fileID: 2100000, guid: ecad5e997b1cd1e4b81347feb3a532db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material__1
+    second: {fileID: 2100000, guid: 60d0eccc25d18f84b98fbf9b675d3c0c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material__2
+    second: {fileID: 2100000, guid: 1d86429c89d4db44fb51fb61ae8dc8df, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: mat_Monument_angels
+    second: {fileID: 2100000, guid: e34545ac33030bc4d919d0e645d3ae6d, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
