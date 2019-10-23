@@ -1,4 +1,5 @@
 ﻿
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Root", menuName = "FL/Create Game Session Settings")]
@@ -8,16 +9,26 @@ public class GameSessionSettings : ScriptableObject {
     protected GameplaySettings _GameplaySettings;
 
     [Header("Game Parameters")]
-    public float GameTime;
+    public int GameLevel;
+
+    public int BulletsRemaining;
     
     public Vector2 AngelsAttackPosition;
-    
-    public float GameDifficulty => Mathf.Clamp01(_GameplaySettings.GameDifficultyCurve.Evaluate(GameTime));
 
     public GameplaySettings GameplaySettings => _GameplaySettings;
 
-    public void InitGameSession() {
-        GameTime = 0.0f;
+    public int NumberOfWeepingAngels =>
+        Math.Max(0, Mathf.RoundToInt(GameplaySettings.WeepingAngelsSpawnCount.Evaluate(GameLevel)));
+
+    public int NumberOfRegularAngels => 
+        Math.Max(0, Mathf.RoundToInt(GameplaySettings.BaseAngelsSpawnCount.Evaluate(GameLevel)));
+
+    protected int NumberOfBulletsInLevel => 
+        Math.Max(0, Mathf.RoundToInt(GameplaySettings.WeepingAngelsSpawnCount.Evaluate(GameLevel)));
+    
+    public void InitLevel(int level) {
+        GameLevel = level;
+        BulletsRemaining = NumberOfBulletsInLevel;
     }
     
     public float NewAngelSpawnRadius() {
@@ -25,10 +36,15 @@ public class GameSessionSettings : ScriptableObject {
             _GameplaySettings.AngelsSpawnRadiusMinMax.x,
             _GameplaySettings.AngelsSpawnRadiusMinMax.y);
     }
-    
-    public float NewAngelMovementSpeed() {
+
+    public float NewAngelMovmentDelay() {
         return UnityEngine.Random.Range(
-            _GameplaySettings.AngelsMovementVelocityMinMax.x,
-            _GameplaySettings.AngelsMovementVelocityMinMax.y);
+            _GameplaySettings.MovementDelayMinMax.x,
+            _GameplaySettings.MovementDelayMinMax.y);
+    }
+    
+    public float GetAngelVelocity(float distanceToTarget) {
+        Debug.Log("T:" +distanceToTarget +" V: "+_GameplaySettings.AngelsMovementVelocity.Evaluate(distanceToTarget));
+        return _GameplaySettings.AngelsMovementVelocity.Evaluate(distanceToTarget);
     }
 }

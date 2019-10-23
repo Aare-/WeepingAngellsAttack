@@ -1,5 +1,6 @@
 ﻿
 using System;
+using TinyMessenger;
 using UnityEngine;
 
 public class BaseAngel : MonoBehaviour {
@@ -7,7 +8,19 @@ public class BaseAngel : MonoBehaviour {
     [SerializeField] 
     protected GameSessionSettings _Settings;
 
-    protected void OnEnable() {
+    protected virtual void OnEnable() {
+        #region Register to messages
+        TinyTokenManager
+            .Instance
+            .Register(this, (Msg.CleanAngels m) => {
+                DestroyImmediate(this.gameObject);
+            });
+        
+        TinyTokenManager
+            .Instance
+            .Register(this, (Msg.AngelsWon m) => { this.enabled = false; });
+        #endregion
+        
         var spawnRadius = _Settings.NewAngelSpawnRadius();
         var spawnPosition =
             _Settings.AngelsAttackPosition +
@@ -18,6 +31,12 @@ public class BaseAngel : MonoBehaviour {
         var rotation = new Quaternion();
         rotation.SetLookRotation(_Settings.AngelsAttackPosition.ToMapPos() - transform.position, Vector3.up);
         transform.localRotation = rotation;
+    }
+
+    protected void OnDisable() {
+        TinyTokenManager
+            .Instance
+            .UnregisterAll(this);
     }
 
     public virtual void OnBeingShoot() {

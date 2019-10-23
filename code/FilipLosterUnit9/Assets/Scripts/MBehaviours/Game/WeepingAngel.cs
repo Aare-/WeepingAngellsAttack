@@ -1,4 +1,5 @@
 ﻿using System;
+using TinyMessenger;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions.Must;
@@ -10,12 +11,16 @@ public class WeepingAngel : BaseAngel {
     
     private float _MovementVelocity;
 
+    private float _MovementDelay;
+
     protected void Awake() {
         _Collider = GetComponent<Collider>();
     }
 
-    protected void OnEnable() {
+    protected override void OnEnable() {
         base.OnEnable();
+
+        _MovementDelay = _Settings.NewAngelMovmentDelay();
     }
 
     public override void OnBeingShoot() {
@@ -25,9 +30,20 @@ public class WeepingAngel : BaseAngel {
     }
 
     protected void Update() {
-        if (Vector2.Distance(transform.position.FromMapPos(), _Settings.AngelsAttackPosition) < 
-                _Settings.GameplaySettings.AngelsWinRadius) {
-            Debug.Log("ANGELS WIN");
+        var distanceToTarget = Vector2.Distance(
+            transform.position.FromMapPos(), 
+            _Settings.AngelsAttackPosition);
+        
+        if (distanceToTarget < _Settings.GameplaySettings.AngelsWinRadius) {
+            TinyMessengerHub
+                .Instance
+                .Publish(Msg.AngelsWon.Get());
+            return;
+        }
+
+        // wait for movement if delay set
+        if (_MovementDelay > 0) {
+            _MovementDelay -= Time.deltaTime;
             return;
         }
         
@@ -37,14 +53,12 @@ public class WeepingAngel : BaseAngel {
             _MovementVelocity = 0.0f;
         } else {
             // angel invisible - start movement!
-            if (Math.Abs(_MovementVelocity) < 0.001f) {
-                _MovementVelocity = _Settings.NewAngelMovementSpeed();
-            }
+            _MovementVelocity = _Settings.GetAngelVelocity(distanceToTarget);
         }
         
-        var position = new Vector2(transform.position.x, transform.position.z);
+        var position = transform.position.FromMapPos();
         var movDelta = (Time.deltaTime * _MovementVelocity *
-                        (_Settings.AngelsAttackPosition - (Vector2) position).normalized);
+                        (_Settings.AngelsAttackPosition - position).normalized);
         transform.position += movDelta.ToMapPos();
     }
 
