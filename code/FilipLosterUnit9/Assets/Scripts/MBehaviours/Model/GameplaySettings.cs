@@ -12,9 +12,13 @@ public class GameplaySettings : ScriptableObject {
     public Vector2 MovementDelayMinMax;
 
     public AnimationCurve AngelsMovementVelocity;
+
+    public float AttackVelocityWhenWithoutBullet;
     
     [Header("Difficulty Config")]
     public AnimationCurve WeepingAngelsSpawnCount;
+    
+    public AnimationCurve BulletsPerLevelCount;
     
     public AnimationCurve BaseAngelsSpawnCount;
 }

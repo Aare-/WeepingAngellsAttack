@@ -42,7 +42,8 @@ public class BaseAngel : MonoBehaviour {
             .UnregisterAll(this);
     }
 
-    public virtual void OnBeingShoot() {
+    public void OnBeingShoot() {
+        if (_Settings.CurrentState != GameSessionSettings.GAME_STATE.GAME_IN_PROGRESS) return;
         if (_Settings.BulletsRemaining <= 0) {
             TinyMessengerHub
                 .Instance

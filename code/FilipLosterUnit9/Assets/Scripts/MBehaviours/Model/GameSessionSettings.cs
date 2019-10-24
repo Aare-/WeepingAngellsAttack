@@ -36,7 +36,9 @@ public class GameSessionSettings : ScriptableObject {
         Math.Max(0, Mathf.RoundToInt(GameplaySettings.BaseAngelsSpawnCount.Evaluate(GameLevel)));
 
     protected int NumberOfBulletsInLevel => 
-        Math.Max(0, Mathf.RoundToInt(GameplaySettings.WeepingAngelsSpawnCount.Evaluate(GameLevel)));
+        Math.Max(
+            NumberOfWeepingAngels, 
+            Mathf.RoundToInt(GameplaySettings.BulletsPerLevelCount.Evaluate(GameLevel)));
     
     public void InitLevel(int level) {
         GameLevel = level;

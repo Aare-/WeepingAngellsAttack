@@ -52,15 +52,17 @@ public class WeepingAngel : BaseAngel {
         }
         
         var planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        if (GeometryUtility.TestPlanesAABB(planes, _Collider.bounds) &&
-                // fear the bullets OwO
-                _Settings.BulletsRemaining > 0) {
+        if (GeometryUtility.TestPlanesAABB(planes, _Collider.bounds)) {
             // angel visible - stop movement!
             _MovementVelocity = 0.0f;
         } else {
             // angel invisible - start movement!
             _MovementVelocity = _Settings.GetAngelVelocity(distanceToTarget);
         }
+        
+        if(_Settings.BulletsRemaining == 0)
+            // end it fast
+            _MovementVelocity = _Settings.GameplaySettings.AttackVelocityWhenWithoutBullet;
         
         var position = transform.position.FromMapPos();
         var movDelta = (Time.deltaTime * _MovementVelocity *
