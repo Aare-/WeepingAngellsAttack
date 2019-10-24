@@ -23,11 +23,10 @@ public class WeepingAngel : BaseAngel {
         _MovementDelay = _Settings.NewAngelMovmentDelay();
     }
 
-    public override void OnBeingShoot() {
-        DestroyAngel();
+    protected override void AngelShot() {
+        base.AngelShot();
         
         _Settings.WeepingAngelsRemaining--;
-        _Settings.BulletsRemaining--;
         
         TinyMessengerHub
             .Instance

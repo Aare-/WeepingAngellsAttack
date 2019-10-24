@@ -43,15 +43,14 @@ public class BaseAngel : MonoBehaviour {
     }
 
     public virtual void OnBeingShoot() {
-        DestroyAngel();
-        
-        _Settings.BulletsRemaining--;
+        if (_Settings.BulletsRemaining <= 0) return;
 
-        if (_Settings.BulletsRemaining < _Settings.WeepingAngelsRemaining) {
-            TinyMessengerHub
-                .Instance
-                .Publish(Msg.AngelsWon.Get());
-        }
+        _Settings.BulletsRemaining--;
+        AngelShot();
+    }
+
+    protected virtual void AngelShot() {
+        DestroyAngel();
     }
 
     protected void DestroyAngel() {
