@@ -10,5 +10,6 @@ public class GameSettings : ScriptableObject {
         set => _IsSoundEnabled = value;
     }
 
+    [SerializeField]
     protected bool _IsSoundEnabled;
 }

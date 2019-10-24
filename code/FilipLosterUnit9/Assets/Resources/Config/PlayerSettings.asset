@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e61e1f742d125b24d93ae8ffe2c5020b, type: 3}
   m_Name: PlayerSettings
   m_EditorClassIdentifier: 
-  IsSoundEnabled: 1
+  _IsSoundEnabled: 1

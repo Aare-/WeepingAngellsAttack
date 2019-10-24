@@ -43,7 +43,17 @@ public class BaseAngel : MonoBehaviour {
     }
 
     public virtual void OnBeingShoot() {
-        if (_Settings.BulletsRemaining <= 0) return;
+        if (_Settings.BulletsRemaining <= 0) {
+            TinyMessengerHub
+                .Instance
+                .Publish(Msg.PlaySound.Get(SoundController.Sounds.EMPTY_GUN));
+            
+            return;
+        }
+        
+        TinyMessengerHub
+            .Instance
+            .Publish(Msg.PlaySound.Get(SoundController.Sounds.GUNSHOOT));
 
         _Settings.BulletsRemaining--;
         AngelShot();
