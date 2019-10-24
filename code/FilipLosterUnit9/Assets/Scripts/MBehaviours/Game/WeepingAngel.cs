@@ -52,7 +52,9 @@ public class WeepingAngel : BaseAngel {
         }
         
         var planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        if (GeometryUtility.TestPlanesAABB(planes, _Collider.bounds)) {
+        if (GeometryUtility.TestPlanesAABB(planes, _Collider.bounds) &&
+                // fear the bullets OwO
+                _Settings.BulletsRemaining > 0) {
             // angel visible - stop movement!
             _MovementVelocity = 0.0f;
         } else {

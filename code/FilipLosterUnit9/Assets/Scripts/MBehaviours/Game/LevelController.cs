@@ -46,11 +46,12 @@ public class LevelController : MonoBehaviour {
             .Instance
             .Publish(Msg.PlaySound.Get(SoundController.Sounds.THUNDER));
         
-        yield return new WaitForSeconds(0.5f);
-        
         TinyMessengerHub
             .Instance
-            .Publish(Msg.SpawnAngels.Get());                
+            .Publish(Msg.SpawnAngels.Get());
+        
+        yield return new WaitForSeconds(0.5f);
+        
         
         _GameSession.CurrentState = GameSessionSettings.GAME_STATE.GAME_IN_PROGRESS;
     }
