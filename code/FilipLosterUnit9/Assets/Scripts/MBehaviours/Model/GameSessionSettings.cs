@@ -4,11 +4,21 @@ using UnityEngine;
 
 [CreateAssetMenu(fileName = "Root", menuName = "FL/Create Game Session Settings")]
 public class GameSessionSettings : ScriptableObject {
+    public enum GAME_STATE {
+        NONE,
+        GAME_IN_PROGRESS,
+        DEFEAT,
+        VICTORY,
+        NEW_LEVEL
+    }
+    
     [Header("Config")]
     [SerializeField] 
     protected GameplaySettings _GameplaySettings;
 
-    [Header("Game Parameters")]
+    [Header("Game Parameters")] 
+    public GAME_STATE CurrentState;
+    
     public int GameLevel;
 
     public int BulletsRemaining;

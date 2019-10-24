@@ -6,23 +6,14 @@ using TinyMessenger;
 using UnityEngine;
 
 public class LevelController : MonoBehaviour {
-    enum GAME_STATE {
-        NONE,
-        IN_PROGRESS,
-        DEFEAT,
-        VICTORY,
-        NEW_LEVEL
-    }
-    
+
     [SerializeField] 
     protected GameSessionSettings _GameSession;
 
-    private GAME_STATE _CurrentState;
 
-        
     protected void Start() {
-        _CurrentState = GAME_STATE.NONE;
-        
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NONE;
+
         _GameSession.GameLevel = 0;
         StartCoroutine(InitNextLevel());
     }
@@ -42,11 +33,13 @@ public class LevelController : MonoBehaviour {
         TinyTokenManager
             .Instance
             .UnregisterAll(this);
+        
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NONE;
     }
 
     private IEnumerator InitNextLevel() {
-        _CurrentState = GAME_STATE.NEW_LEVEL;
-        
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NEW_LEVEL;
+
         _GameSession.InitLevel(_GameSession.GameLevel + 1);
         
         TinyMessengerHub
@@ -59,15 +52,15 @@ public class LevelController : MonoBehaviour {
             .Instance
             .Publish(Msg.SpawnAngels.Get());                
         
-        _CurrentState = GAME_STATE.IN_PROGRESS;
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.GAME_IN_PROGRESS;
     }
 
     private IEnumerator AngelsWon() {
-        if (_CurrentState != GAME_STATE.IN_PROGRESS) 
+        if (_GameSession.CurrentState != GameSessionSettings.GAME_STATE.GAME_IN_PROGRESS) 
             yield break;
 
-        _CurrentState = GAME_STATE.DEFEAT;
-                
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.DEFEAT;
+
         TinyMessengerHub
             .Instance
             .Publish(Msg.PlaySound.Get(SoundController.Sounds.ANGELS_WON));
@@ -81,11 +74,11 @@ public class LevelController : MonoBehaviour {
     }
 
     private IEnumerator AdvanceToNextLevel() {
-        if (_CurrentState != GAME_STATE.IN_PROGRESS) yield break;
+        if (_GameSession.CurrentState != GameSessionSettings.GAME_STATE.GAME_IN_PROGRESS) yield break;
         if (_GameSession.WeepingAngelsRemaining > 0) yield break;
             
-        _CurrentState = GAME_STATE.VICTORY;
-        
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.VICTORY;
+
         yield return new WaitForSeconds(0.5f);
         
         TinyMessengerHub
