@@ -5,6 +5,6 @@ public class BeginGameButton : MonoBehaviour {
     public void BeginGameButtonHandler() {
         TinyMessengerHub
             .Instance
-            .Publish(Msg.BeginGameClicked.Get());
+            .Publish(Msg.GoToGame.Get());
     }
 }

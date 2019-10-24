@@ -24,9 +24,14 @@ public class WeepingAngel : BaseAngel {
     }
 
     public override void OnBeingShoot() {
-        Debug.Log("SUCCESS!");
-
         DestroyAngel();
+        
+        _Settings.WeepingAngelsRemaining--;
+        _Settings.BulletsRemaining--;
+        
+        TinyMessengerHub
+            .Instance
+            .Publish(Msg.WeepingAngelKilled.Get());
     }
 
     protected void Update() {

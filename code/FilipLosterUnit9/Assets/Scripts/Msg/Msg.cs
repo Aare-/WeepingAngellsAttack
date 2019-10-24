@@ -3,13 +3,30 @@ using System.Collections;
 using TinyMessenger;
 
 public class Msg {
-    public class BeginGameClicked : TinyMessenger.ITinyMessage {
-        private static BeginGameClicked _Instance = null;
+    public class GoToGame : TinyMessenger.ITinyMessage {
+        private static GoToGame _Instance = null;
         
         #region Implementation
-        public static BeginGameClicked Get() {
+        public static GoToGame Get() {
             if (_Instance == null)
-                _Instance = new BeginGameClicked();
+                _Instance = new GoToGame();
+
+            return _Instance;
+        }
+
+        public object Sender {
+            get { return null; }
+        }
+        #endregion        
+    }
+    
+    public class GoToMainMenu : TinyMessenger.ITinyMessage {
+        private static GoToMainMenu _Instance = null;
+        
+        #region Implementation
+        public static GoToMainMenu Get() {
+            if (_Instance == null)
+                _Instance = new GoToMainMenu();
 
             return _Instance;
         }
@@ -61,6 +78,23 @@ public class Msg {
         public static AngelsWon Get() {
             if (_Instance == null)
                 _Instance = new AngelsWon();
+
+            return _Instance;
+        }
+
+        public object Sender {
+            get { return null; }
+        }
+        #endregion        
+    }
+    
+    public class WeepingAngelKilled : TinyMessenger.ITinyMessage {
+        private static WeepingAngelKilled _Instance = null;
+
+        #region Implementation
+        public static WeepingAngelKilled Get() {
+            if (_Instance == null)
+                _Instance = new WeepingAngelKilled();
 
             return _Instance;
         }

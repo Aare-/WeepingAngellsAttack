@@ -12,6 +12,8 @@ public class GameSessionSettings : ScriptableObject {
     public int GameLevel;
 
     public int BulletsRemaining;
+
+    public int WeepingAngelsRemaining;
     
     public Vector2 AngelsAttackPosition;
 
@@ -29,6 +31,7 @@ public class GameSessionSettings : ScriptableObject {
     public void InitLevel(int level) {
         GameLevel = level;
         BulletsRemaining = NumberOfBulletsInLevel;
+        WeepingAngelsRemaining = NumberOfWeepingAngels;
     }
     
     public float NewAngelSpawnRadius() {
@@ -44,7 +47,6 @@ public class GameSessionSettings : ScriptableObject {
     }
     
     public float GetAngelVelocity(float distanceToTarget) {
-        Debug.Log("T:" +distanceToTarget +" V: "+_GameplaySettings.AngelsMovementVelocity.Evaluate(distanceToTarget));
         return _GameplaySettings.AngelsMovementVelocity.Evaluate(distanceToTarget);
     }
 }

@@ -18,7 +18,10 @@ public class BaseAngel : MonoBehaviour {
         
         TinyTokenManager
             .Instance
-            .Register(this, (Msg.AngelsWon m) => { this.enabled = false; });
+            .Register(this, (Msg.AngelsWon m) => {
+                if (this == null) return;
+                this.enabled = false;
+            });
         #endregion
         
         var spawnRadius = _Settings.NewAngelSpawnRadius();
@@ -42,10 +45,16 @@ public class BaseAngel : MonoBehaviour {
     public virtual void OnBeingShoot() {
         DestroyAngel();
         
-        Debug.Log("FAILURE!");    
+        _Settings.BulletsRemaining--;
+
+        if (_Settings.BulletsRemaining < _Settings.WeepingAngelsRemaining) {
+            TinyMessengerHub
+                .Instance
+                .Publish(Msg.AngelsWon.Get());
+        }
     }
 
     protected void DestroyAngel() {
-        DestroyImmediate(this.gameObject);
+        Destroy(this.gameObject);
     }
 }

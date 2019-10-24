@@ -19,7 +19,12 @@ public class GameController : Singleton<GameController> {
     protected void OnEnable() {
         TinyTokenManager
             .Instance
-            .Register<Msg.BeginGameClicked>(this, BeginNewGame);
+            .Register<Msg.GoToGame>(this, BeginNewGame);
+        TinyTokenManager
+            .Instance
+            .Register<Msg.GoToMainMenu>(this, (Msg.GoToMainMenu m) => {
+                DisplayMenu();
+            });
     }
 
     protected void OnDisable() {
@@ -30,7 +35,7 @@ public class GameController : Singleton<GameController> {
     #endregion
 
     #region Game States
-    private void BeginNewGame(Msg.BeginGameClicked m) {
+    private void BeginNewGame(Msg.GoToGame m) {
         CleanUpScene();
         Instantiate(
             _GameLevel,
