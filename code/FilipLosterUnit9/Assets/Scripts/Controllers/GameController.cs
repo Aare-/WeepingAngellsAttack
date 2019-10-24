@@ -13,19 +13,15 @@ public class GameController : Singleton<GameController> {
     protected GameObject _GameLevel;
 
     #region Lifecycle
-    protected void Start() {
-        DisplayMenu();
-    }
-    
     protected void OnEnable() {
         TinyTokenManager
             .Instance
             .Register<Msg.GoToGame>(this, BeginNewGame);
         TinyTokenManager
             .Instance
-            .Register<Msg.GoToMainMenu>(this, (Msg.GoToMainMenu m) => {
-                DisplayMenu();
-            });
+            .Register<Msg.GoToMainMenu>(this, m => DisplayMenu());
+        
+        DisplayMenu();
     }
 
     protected void OnDisable() {

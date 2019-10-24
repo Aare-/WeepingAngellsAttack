@@ -10,14 +10,6 @@ public class LevelController : MonoBehaviour {
     [SerializeField] 
     protected GameSessionSettings _GameSession;
 
-
-    protected void Start() {
-        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NONE;
-
-        _GameSession.GameLevel = 0;
-        StartCoroutine(InitNextLevel());
-    }
-
     protected void OnEnable() {
         TinyTokenManager
             .Instance
@@ -27,6 +19,11 @@ public class LevelController : MonoBehaviour {
         TinyTokenManager
             .Instance
             .Register(this, (Msg.AngelsWon m) => { StartCoroutine(AngelsWon()); });
+        
+        _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NONE;
+
+        _GameSession.GameLevel = 0;
+        StartCoroutine(InitNextLevel());
     }
 
     protected void OnDisable() {
@@ -38,6 +35,8 @@ public class LevelController : MonoBehaviour {
     }
 
     private IEnumerator InitNextLevel() {
+        yield return new WaitForEndOfFrame();
+        
         _GameSession.CurrentState = GameSessionSettings.GAME_STATE.NEW_LEVEL;
 
         _GameSession.InitLevel(_GameSession.GameLevel + 1);
